@@ -1,6 +1,6 @@
 import * as React from "react";
-import {Container, Nav, Navbar} from "react-bootstrap";
-import {Link, NavLink} from "react-router-dom";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const CustomNavbar = (): React.ReactElement => {
   return (
