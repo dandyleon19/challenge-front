@@ -27,7 +27,7 @@ const IndexClients = (): React.ReactElement => {
   const [totalPages, setTotalPages] = React.useState([0])
 
   React.useEffect(() => {
-    getClients()
+    getClients().then(r => r)
   }, [])
 
   const getClients = async () => {
@@ -114,7 +114,7 @@ const IndexClients = (): React.ReactElement => {
               key={page}
               active={page === currentPage}
               onClick={() => {
-                getClientsByPage(page)
+                getClientsByPage(page).then(r => r)
               }}>
               {page + 1}
             </Pagination.Item>

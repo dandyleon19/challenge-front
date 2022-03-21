@@ -1,6 +1,6 @@
 import React from "react";
 import TitlePage from "../../components/shared/title-page";
-import { Card, CardGroup, Col, Row } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 import { http } from "../../api";
 
 const IndexHome = (): React.ReactElement => {
