@@ -13,6 +13,7 @@ const CustomRoutes = (): React.ReactElement => {
           <Route path="/" element={<IndexHome/>}/>
           <Route path="/clients" element={<IndexClients/>}/>
           <Route path="/clients/create" element={<IndexClientsCreate/>}/>
+          <Route path="/clients/edit/:id" element={<IndexClientsCreate/>}/>
           <Route
             path="*"
             element={

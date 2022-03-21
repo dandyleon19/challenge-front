@@ -1,14 +1,35 @@
-import {Button, FloatingLabel, Form} from "react-bootstrap";
+import { Button, FloatingLabel, Form } from "react-bootstrap";
 import React from "react";
 import { useForm } from "react-hook-form";
-import {useNavigate} from "react-router-dom";
-import {http} from '../../api'
+import { useNavigate, useParams } from "react-router-dom";
+import { http } from '../../api'
 
 const ClientForm = (): React.ReactElement => {
 
   const api = http()
   const navigate = useNavigate()
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const params = useParams()
+  let { register, setValue, handleSubmit, formState: { errors } } = useForm()
+  const [toUpdate, setToUpdate] = React.useState(false)
+
+  React.useEffect(() => {
+
+    const getClient = async (id: number) => {
+      await api.get(`${process.env.REACT_APP_BACKEND_URL}api/v1/clients/${id}`)
+        .then((res) => {
+          setValue('name', res.data.client.name)
+          setValue('lastname', res.data.client.lastname)
+          setValue('birthday', res.data.client.birthday)
+        }).catch((err) => {
+          console.error(err.message)
+        })
+    }
+
+    if (params.id) {
+      setToUpdate(true)
+      getClient(parseInt(params.id))
+    }
+  }, [])
 
   const createClient = async (data: any) => {
     const client = {
@@ -25,8 +46,31 @@ const ClientForm = (): React.ReactElement => {
       })
   }
 
+  const updateClient = async (data: any) => {
+    const client = {
+      name: data.name,
+      lastname: data.lastname,
+      birthday: data.birthday
+    }
+
+    await api.patch(`${process.env.REACT_APP_BACKEND_URL}api/v1/clients/${params.id}`, client)
+      .then((res) => {
+        navigate("/clients")
+      }).catch((err) => {
+        console.error(err.message)
+      })
+  }
+
+  const handleButton = (data: any) => {
+    if (toUpdate) {
+      updateClient(data)
+    } else {
+      createClient(data)
+    }
+  }
+
   return (
-    <Form  onSubmit={handleSubmit((data) => createClient(data))}>
+    <Form  onSubmit={handleSubmit((data) => handleButton(data))}>
       <FloatingLabel
         controlId="name"
         label="Nombres"

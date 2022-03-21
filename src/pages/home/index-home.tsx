@@ -50,7 +50,7 @@ const IndexHome = (): React.ReactElement => {
             <Card.Body>
               <Card.Title>Promedio de edades de Clientes</Card.Title>
               <Card.Text>
-                { avgAges }
+                { Math.round(avgAges * 100) / 100 }
               </Card.Text>
             </Card.Body>
           </Card>

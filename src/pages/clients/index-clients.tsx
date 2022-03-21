@@ -3,7 +3,7 @@ import {Button, Col, Row, Table} from "react-bootstrap";
 import TitlePage from "../../components/shared/title-page";
 import Pagination from 'react-bootstrap/Pagination'
 import moment from "moment/moment";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 import {http} from '../../api'
 
@@ -19,6 +19,7 @@ interface Client {
 const IndexClients = (): React.ReactElement => {
 
   const api = http()
+  const navigate = useNavigate()
 
   moment.locale();
 
@@ -55,6 +56,15 @@ const IndexClients = (): React.ReactElement => {
     })
   }
 
+  const deleteClient = async (id: number) => {
+    api.destroy(`${process.env.REACT_APP_BACKEND_URL}api/v1/clients/${id}`)
+      .then(res => {
+        getClientsByPage(0)
+      }).catch((err) => {
+      console.error(err.message)
+    })
+  }
+
   const convertTotalPagesInArray = (totalPages: number) => {
     let init: number = 0
     let total: number[] = []
@@ -74,21 +84,22 @@ const IndexClients = (): React.ReactElement => {
           <TitlePage title={"Listado de Clientes"}/>
         </Col>
         <Col style={{display: "flex"}} className={"page__create-button"}>
-          <Button variant="primary">
-            <Link to={"/clients/create"} className={"page__button"}>Crear Cliente</Link>
-          </Button>
+          <Link to={"/clients/create"} className={"page__button"}>
+            <Button variant="primary">
+              Crear Cliente
+            </Button>
+          </Link>
         </Col>
       </Row>
 
       <Table responsive="md">
         <thead>
         <tr>
-          <th>#</th>
+          <th>ID</th>
           <th>Nombres</th>
           <th>Apellidos</th>
           <th>Fecha de Nacimiento</th>
           <th>Fecha de Registro</th>
-          <th>Fecha de Actualización</th>
           <th>Acciones</th>
         </tr>
         </thead>
@@ -100,8 +111,16 @@ const IndexClients = (): React.ReactElement => {
             <td>{client.lastname}</td>
             <td>{moment(client.birthday).format('LL')}</td>
             <td>{moment(client.createdAt).fromNow()}</td>
-            <td>{moment(client.updatedAt).fromNow()}</td>
-            <td>Acciones</td>
+            <td>
+              <Button className={"button"} variant={"success"} style={{margin: "1px 5px"}}
+                      onClick={() => navigate(`/clients/edit/${client.id}`)}>
+                Editar
+              </Button>
+              <Button className={"button"} variant={"danger"} style={{margin: "1px 5px"}}
+                      onClick={() => deleteClient(client.id)}>
+                Eliminar
+              </Button>
+            </td>
           </tr>
         })}
         </tbody>
