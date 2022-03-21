@@ -17,7 +17,7 @@ const ClientForm = (): React.ReactElement => {
       birthday: data.birthday
     }
 
-    await api.post("http://localhost:4000/api/v1/clients", client)
+    await api.post(`${process.env.REACT_APP_BACKEND_URL}api/v1/clients`, client)
       .then((res) => {
         navigate("/clients")
       }).catch((err) => {
