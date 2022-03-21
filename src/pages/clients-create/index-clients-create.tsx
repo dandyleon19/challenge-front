@@ -9,7 +9,7 @@ const IndexClientsCreate = (): React.ReactElement => {
 
       <Row className={"page__header"}>
         <Col>
-          <TitlePage title={"Creación de Cliente"} />
+          <TitlePage title={"Formulario de Cliente"} />
         </Col>
       </Row>
 

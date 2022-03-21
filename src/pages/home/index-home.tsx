@@ -38,27 +38,29 @@ const IndexHome = (): React.ReactElement => {
         <Col>
           <Card>
             <Card.Body>
-              <Card.Title>Clientes Registrados</Card.Title>
-              <Card.Text>
-                { totalClients }
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Card>
-            <Card.Body>
-              <Card.Title>Promedio de edades de Clientes</Card.Title>
+              <Card.Title><b>Promedio de edades de Clientes</b></Card.Title>
               <Card.Text>
                 { Math.round(avgAges * 100) / 100 }
               </Card.Text>
             </Card.Body>
           </Card>
         </Col>
+
         <Col>
           <Card>
             <Card.Body>
-              <Card.Title>Clientes registrados hoy</Card.Title>
+              <Card.Title><b>Clientes Registrados</b></Card.Title>
+              <Card.Text>
+                { totalClients }
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+
+        <Col>
+          <Card>
+            <Card.Body>
+              <Card.Title><b>Clientes registrados hoy</b></Card.Title>
               <Card.Text>
                 { totalRegisteredToday }
               </Card.Text>
