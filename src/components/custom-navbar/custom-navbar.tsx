@@ -11,7 +11,7 @@ const CustomNavbar = (): React.ReactElement => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link >
-              <Link to={"/"}>Inicio</Link>
+              <Link to={"/"}>Dashboard</Link>
             </Nav.Link>
             <Nav.Link >
               <Link to={"/clients"}>Clientes</Link>
