@@ -27,21 +27,20 @@ const IndexClients = (): React.ReactElement => {
   const [totalPages, setTotalPages] = React.useState([0])
 
   React.useEffect(() => {
-    getClients().then(r => r)
+    const getClients = () => {
+      api.get(`${process.env.REACT_APP_BACKEND_URL}api/v1/clients`)
+        .then(res => {
+          if (res.data.success) {
+            setClients(res.data.paging.clients)
+            setCurrentPage(res.data.paging.currentPage)
+            setTotalPages(convertTotalPagesInArray(res.data.paging.totalPages))
+          }
+        }).catch((err) => {
+        console.error(err.message)
+      })
+    }
+    getClients()
   }, [])
-
-  const getClients = async () => {
-    api.get(`${process.env.REACT_APP_BACKEND_URL}api/v1/clients`)
-      .then(res => {
-        if (res.data.success) {
-          setClients(res.data.paging.clients)
-          setCurrentPage(res.data.paging.currentPage)
-          setTotalPages(convertTotalPagesInArray(res.data.paging.totalPages))
-        }
-      }).catch((err) => {
-      console.error(err.message)
-    })
-  }
 
   const getClientsByPage = async (page: number) => {
     api.get(`${process.env.REACT_APP_BACKEND_URL}api/v1/clients?page=${page}`)

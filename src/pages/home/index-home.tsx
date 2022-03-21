@@ -12,16 +12,18 @@ const IndexHome = (): React.ReactElement => {
   const [totalRegisteredToday, setTotalRegisteredToday] = React.useState(0)
 
   React.useEffect(() => {
-    api.get(`${process.env.REACT_APP_BACKEND_URL}api/v1/dashboard`)
-      .then(res => {
-        if (res.data.success) {
-          setAvgAges(res.data.avgAges)
-          setTotalClients(res.data.totalClients)
-          setTotalRegisteredToday(res.data.totalRegisteredToday)
-        }
-      }).catch((err) => {
-      console.error(err.message)
-    })
+    const getData = () => {
+      api.get(`${process.env.REACT_APP_BACKEND_URL}api/v1/dashboard`)
+        .then(res => {
+          if (res.data.success) {
+            setAvgAges(res.data.avgAges)
+            setTotalClients(res.data.totalClients)
+            setTotalRegisteredToday(res.data.totalRegisteredToday)
+          }
+        }).catch((err) => {
+      })
+    }
+    getData()
   }, [])
 
 
